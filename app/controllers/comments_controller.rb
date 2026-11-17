@@ -2,11 +2,15 @@ class CommentsController < ApplicationController
 
 	def create
 		@photo=Photo.find(params[:photo_id])
-		@comment=@photo.comments.create(comment_params)
+		@comment=@photo.comments.build(comment_params)
 		@comment.user_id=current_user.id
 		@comment.save
-		flash[:notice] = "Comment added!"
-    	redirect_to :back
+		if @comment.save
+			flash[:notice] = "Comment added!"
+		else
+			flash[:alert]= "Something went wrong"
+		end
+    redirect_to :back
 	end
 
 	def destroy
