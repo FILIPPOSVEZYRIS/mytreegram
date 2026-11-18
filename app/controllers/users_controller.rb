@@ -32,6 +32,15 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def unfollow
+    @user_to_unfollow=User.find(params[:id])
+    prepare_unfollow=Follow.where(follower_id: current_user.id, followed_id: @user_to_unfollow.id)
+    if prepare_unfollow.delete_all>0
+      flash[:notice] = "You unfollowed " + @user_to_unfollow.email
+    end
+    redirect_to :back
+  end
+
   def show
     @users = User.all
     @user = User.find(params[:id])

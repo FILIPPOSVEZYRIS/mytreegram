@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
 post '/users/:id/follow', to: 'users#follow', as: 'follow_user'
+delete 'users/:id/unfollow', to: 'users#unfollow', as:'unfollow_user' 
   resources :tags, only: [:create, :destroy]
   get '/log-in' => "sessions#new"
   post '/log-in' => "sessions#create"
