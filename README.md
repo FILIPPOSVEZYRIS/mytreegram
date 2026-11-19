@@ -1,41 +1,39 @@
-Treegram
+# Treegram
 
-(modified by S. Anastasiadis and A. Katsoulieris for the course MYE042 Internet Technologies, Department of Computer Science and Engineering, School of Enginering, University of Ioannina, Ioannina, Greece)
+Treegram is a photo-sharing application built with Ruby on Rails. This repository contains the extension developed for the **MYE042 Internet Technologies** course at the University of Ioannina. The course starter provides account registration, sign-in, photo uploads, and user tagging.
 
-==============
+## Lab features
 
-A simple ruby on rails app. Allows a user to create an account with username, password, and avatar. After login user can upload photos to their account and tag other users in the photos.
+- **Photo titles.** Add a title on upload. Titles appear in the gallery.
+- **Following and photo feed.** Follow accounts from **All Users**. The gallery shows your photos and photos from the accounts you follow, newest first.
+- **Comments.** Comment on photos in the gallery. Authors can delete their own comments, and photo owners can delete comments on their photos.
+- **Photo deletion.** Delete your own photos together with their associated comments and tags.
+- **Bonus feature.** Use **Unfollow** in **All Users** to stop seeing an account’s photos in your feed.
 
-Installation and Usage
-------------
-Run Postrges Sever
+## Run locally
 
-Clone or download this repository and cd into indent directory
+Use the course virtual machine with Ruby 2.6.6. The lockfile records Rails 4.2.10 and Bundler 1.17.2. The application uses SQLite, Haml, and `kt-paperclip` with ImageMagick for image resizing.
 
+Open a terminal at the repository root. If the gems are missing, install them with `bundle install`. On a fresh checkout without `db/development.sqlite3`, initialize the database with `bundle exec rake db:create db:schema:load`.
+
+```bash
+bundle exec rake db:migrate
+bundle exec rails server
 ```
-$ rake db:create
-$ rake db:migrate
-$ rails server
-```
 
-In your browser visit localhost:3000
+Open [localhost:3000](http://localhost:3000) in your browser.
 
-Motivation
---------
-> **To Practice:**
->- Ruby On Rails project setup
->- User authentication
->- Paperclip gem for uploading files
->- SASS 
->- Unit testing with RSPEC
->- Integration testing with CAPYBARA
+## Try follow and unfollow
 
-Authors
-------
+1. Create two local accounts. Upload a photo with a distinctive title using the first account.
+2. Sign in with the second account and select **Follow** next to the first account in **All Users**. Refresh your gallery to see the photo.
+3. Select **Unfollow** for the first account. The list offers **Follow** again, and the photo disappears from your gallery on refresh.
 
-Kathryn Carr, J Sivakumaran, and Lizzie Koehler
+## Data model
 
-License
--------
+A `Follow` connects two users through `follower_id` and `followed_id`. A `Comment` links its author to a photo. The `Photo` model uses `dependent: :destroy` to remove associated comments and tags when a photo is deleted.
 
-MIT license
+## Credits
+
+Kathryn Carr, J Sivakumaran, and Lizzie Koehler created the original Treegram application. S. Anastasiadis and A. Katsoulieris adapted it for MYE042. The starter README identifies the original project as MIT-licensed.
+

@@ -7,7 +7,6 @@
       - if current_user && user != current_user
         - if current_user.following.include?(user)
           %span.badge.alert-info Following
-          %span.badge.alert-info Following
           = button_to 'Unfollow', unfollow_user_path(user), method: :delete, class: ['btn', 'btn-warning', 'btn-sm']          
         - else
           = button_to 'Follow', follow_user_path(user), method: :post, class: ['btn', 'btn-success', 'btn-sm']
